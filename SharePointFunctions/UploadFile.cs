@@ -16,6 +16,7 @@ namespace SharePointFunctions
         public string FileName { get; set; }
         public string Folder { get; set; }
         public string UserName { get; set; }
+        public bool OverWrite { get; set; } = false;
 
         private SecureString SecPassword;
         public string Password {
@@ -45,7 +46,7 @@ namespace SharePointFunctions
                 byte[] FileContent = System.IO.File.ReadAllBytes(this.FileName);
                 newFile.ContentStream = new MemoryStream(FileContent);
                 newFile.Url = Path.GetFileName(this.FileName);
-                newFile.Overwrite = true;
+                newFile.Overwrite = this.OverWrite;
                 List DocumentLibrary = web.Lists.GetByTitle(this.DocumentLibrary);
                 //SP.Folder folder = DocumentLibrary.RootFolder.Folders.GetByUrl(ClientSubFolder);
                 Folder Clientfolder = DocumentLibrary.RootFolder.Folders.Add(this.Folder);
